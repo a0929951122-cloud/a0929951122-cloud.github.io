@@ -1,20 +1,121 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catch the Ball Game</title>
-  <link rel="stylesheet" href="style.css">
+  <title>個人遊戲風格首頁</title>
+  <!-- 使用像素字體和遊戲主題色 -->
+  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #2c2f45 0%, #2c4858 100%);
+      color: #22e0c2;
+      font-family: 'Press Start 2P', monospace;
+      margin: 0;
+      min-height: 100vh;
+    }
+    header {
+      background: #23243c;
+      padding: 32px 0 24px 0;
+      text-align: center;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+    }
+    header h1 {
+      font-size: 2.2rem;
+      letter-spacing: 3px;
+      margin: 0;
+    }
+    nav {
+      margin: 16px 0;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+    nav a {
+      color: #ffe44d;
+      background: #312f53;
+      padding: 10px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    nav a:hover {
+      color: #22e0c2;
+      background: #13172c;
+    }
+    main {
+      max-width: 700px;
+      margin: 40px auto;
+      background: rgba(44,44,69,0.8);
+      border-radius: 10px;
+      padding: 32px;
+      box-shadow: 0 0 16px #0008;
+    }
+    .avatar {
+      width: 100px;
+      display: block;
+      margin: 0 auto 18px auto;
+      border-radius: 50%;
+      box-shadow: 0 0 12px #22e0c2cc;
+    }
+    .button {
+      display: inline-block;
+      background: #ffe44d;
+      color: #1b1c2a;
+      padding: 12px 28px;
+      margin-top: 28px;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      border: none;
+      font-family: 'Press Start 2P', monospace;
+      box-shadow: 0 3px #d2bc3d;
+      transition: background 0.1s;
+    }
+    .button:hover {
+      background: #ff8d44;
+    }
+    footer {
+      text-align: center;
+      color: #aaaaaa;
+      margin: 24px 0 6px 0;
+      font-size: 0.9rem;
+    }
+    /* 遊戲化裝飾 icon */
+    .game-icon {
+      font-size: 2.7rem;
+      margin: 12px 0;
+      animation: bounce 1.4s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% {transform: translateY(0);}
+      50% {transform: translateY(-18px);}
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1 class="game-heading">Catch the Ball</h1>
-    <p>Score: <span id="score">0</span></p>
-    <div id="gameArea">
-      <div id="ball"></div>
-    </div>
-  </div>
-  <script src="script.js"></script>
+  <header>
+    <span class="game-icon">🎮</span>
+    <h1>玩家名的個人主頁(Player's Web)</h1>
+    <nav>
+      <a href="#">主頁</a>
+      <a href="#">遊戲作品</a>
+      <a href="#">關於我</a>
+      <a href="#">Steam資料</a>
+    </nav>
+  </header>
+  <main>
+    <img class="avatar" src="https://avatars.githubusercontent.com/u/583231?v=4" alt="玩家頭像">
+    <h2>歡迎來到我的遊戲世界！</h2>
+    <p>
+      這裡展示了我開發的遊戲、遊戲心得，還有各種技術分享。<br>
+      平時熱衷於創作像素風格作品，愛玩和評論 Steam/Epic 新遊戲。<br>
+      <span style="color:#ffe44d;">歡迎聯絡或一起交流程式和遊戲~</span>
+    </p>
+    <button class="button">立即挑戰我的小遊戲！</button>
+  </main>
+  <footer>
+    &copy; 2025 玩家名｜Powered by GitHub Pages & Steam
+  </footer>
 </body>
 </html>
-
