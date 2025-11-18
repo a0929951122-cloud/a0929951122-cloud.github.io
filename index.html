@@ -1,60 +1,79 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>3D效果遊戲網站</title>
-<style>
-  body {
-    background: #121212;
-    color: #eee;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    text-align: center;
-    margin: 0; padding: 20px;
-    perspective: 1000px; /* 3D透視 */
-  }
-  h1 {
-    color: #0ff;
-  }
-  #game-btn {
-    font-size: 24px;
-    padding: 20px 50px;
-    background: linear-gradient(135deg, #00bbbb, #004444);
-    border: none;
-    border-radius: 15px;
-    color: #eee;
-    cursor: pointer;
-    box-shadow: 0 0 20px #00bbbbaa;
-    transition: transform 0.6s;
-    transform-style: preserve-3d; /* 啟動3D空間 */
-  }
-  #game-btn:hover {
-    transform: rotateY(180deg) rotateX(15deg) scale(1.1);
-    box-shadow: 0 0 40px #00ffffcc;
-  }
-  #score {
-    font-size: 3rem;
-    color: #ffaa00;
-    margin-top: 15px;
-    text-shadow: 0 0 15px #ffaa00cc;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>動漫風個人網頁</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+      font-family: "Comic Sans MS", cursive, sans-serif;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: rgba(255, 182, 193, 0.8);
+      padding: 20px;
+      text-align: center;
+      font-size: 2.5em;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px #fff;
+      animation: titleGlow 3s infinite alternate;
+    }
+    @keyframes titleGlow {
+      0% { text-shadow: 1px 1px 5px #ff69b4; }
+      100% { text-shadow: 1px 1px 20px #ff1493; }
+    }
+    main {
+      max-width: 800px;
+      margin: 20px auto;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 8px 20px rgba(255, 105, 180, 0.4);
+    }
+    h2 {
+      color: #d81e5b;
+      text-align: center;
+      margin-top: 0;
+    }
+    p {
+      line-height: 1.6;
+      font-size: 1.1em;
+      text-align: justify;
+      margin: 15px 0;
+    }
+    .anime-img {
+      display: block;
+      max-width: 200px;
+      margin: 10px auto;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(255, 105, 180, 0.5);
+      transition: transform 0.3s ease;
+    }
+    .anime-img:hover {
+      transform: scale(1.1) rotate(5deg);
+      box-shadow: 0 7px 25px rgba(255, 20, 147, 0.7);
+    }
+    footer {
+      text-align: center;
+      font-size: 0.9em;
+      color: #999;
+      padding: 15px 0;
+      margin-top: 30px;
+    }
+  </style>
 </head>
 <body>
-<h1>3D效果點擊遊戲</h1>
-<p>點擊按鈕累積分數，按鈕有3D旋轉動畫！</p>
-<button id="game-btn">點我！</button>
-<div id="score">0</div>
-
-<script>
-  const btn = document.getElementById('game-btn');
-  const scoreDisplay = document.getElementById('score');
-  let score = 0;
-
-  btn.addEventListener('click', () => {
-    score++;
-    scoreDisplay.textContent = score;
-  });
-</script>
+  <header>我的動漫風個人網頁</header>
+  <main>
+    <h2>關於我</h2>
+    <p>大家好！這是一個帶有動漫風格的個人網頁，充滿粉色系和可愛元素，喜歡二次元文化的朋友歡迎來聊天！</p>
+    <img src="https://i.imgur.com/8Km9tLL.jpg" alt="動漫角色" class="anime-img"/>
+    <h2>我的興趣</h2>
+    <p>我熱愛動畫、漫畫和遊戲，喜歡嘗試寫程式創造有趣的網頁設計，也喜歡聽動漫音樂。</p>
+  </main>
+  <footer>© 2025 我的動漫風個人網頁</footer>
 </body>
 </html>
