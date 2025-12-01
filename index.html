@@ -1,93 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Simple Game Website</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #222;
-            color: #eee;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: start;
-            height: 100vh;
-        }
-        header {
-            background-color: #444;
-            width: 100%;
-            padding: 1rem;
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-        #game-container {
-            margin-top: 2rem;
-            background-color: #333;
-            width: 600px;
-            height: 400px;
-            border: 3px solid #66ccff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-        canvas {
-            background-color: #000;
-        }
-        footer {
-            margin-top: auto;
-            background-color: #444;
-            width: 100%;
-            padding: 0.5rem;
-            text-align: center;
-            font-size: 0.8rem;
-            color: #aaa;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>玩家名稱 - 個人主頁</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="fonts.googleapis.com" rel="stylesheet">
+    <!-- 引入 Three.js 函式庫 -->
+    <script src="cdnjs.cloudflare.com"></script>
 </head>
 <body>
-    <header>
-        My Simple Game Site
-    </header>
-    <div id="game-container">
-        <canvas id="gameCanvas" width="600" height="400"></canvas>
+    <!-- 用於 3D 動畫的 Canvas -->
+    <canvas id="game-background"></canvas>
+
+    <div class="game-container">
+        <!-- 網站內容保持不變 -->
+        <header class="game-header">
+            <div class="player-status">
+                <span>HP: [|||||||||       ] 90/100</span>
+                <span>MP: [|||||||         ] 70/100</span>
+                <span>LV: 10</span>
+            </div>
+            <h1>歡迎來到我的領域</h1>
+        </header>
+        <nav class="game-nav">
+            <ul>
+                <li><a href="#about" class="nav-item">關於我 (ABOUT)</a></li>
+                <li><a href="#skills" class="nav-item">技能樹 (SKILLS)</a></li>
+                <li><a href="#projects" class="nav-item">任務日誌 (PROJECTS)</a></li>
+                <li><a href="#contact" class="nav-item">聯繫我 (CONTACT)</a></li>
+            </ul>
+        </nav>
+        <main class="game-content">
+            <section id="about" class="game-section">
+                <h2>> 關於我</h2>
+                <p>一位熱愛前端開發的冒險者，專精 HTML, CSS, JavaScript。正在尋找下一個史詩級任務。</p>
+            </section>
+            <section id="skills" class="game-section">
+                <h2>> 技能樹</h2>
+                <ul class="skill-list">
+                    <li>HTML5: ★★★★★</li>
+                    <li>CSS3: ★★★★☆</li>
+                    <li>JavaScript: ★★★★☆</li>
+                    <li>React: ★★★☆☆</li>
+                </ul>
+            </section>
+            <section id="projects" class="game-section">
+                <h2>> 任務日誌</h2>
+                <div class="project-item">
+                    <h3>專案 A: 響應式地牢</h3>
+                    <p>設計了一個可以在任何裝置上運行的響應式網站。</p>
+                </div>
+                <div class="project-item">
+                    <h3>專案 B: 像素村莊</h3>
+                    <p>使用 CSS Grid 和 Flexbox 建立的像素藝術網站。</p>
+                </div>
+            </section>
+            <section id="contact" class="game-section">
+                <h2>> 聯繫我</h2>
+                <p>準備好組隊了嗎？發送郵件到 <a href="mailto:email@example.com">email@example.com</a>。</p>
+            </section>
+        </main>
+        <footer class="game-footer">
+            <p>© 2025 玩家名稱。遊戲結束 (GAME OVER)。</p>
+        </footer>
     </div>
-    <footer>
-        &copy; 2025 Your Name. Game copyright.
-    </footer>
-
-    <script>
-        // Basic canvas setup for game drawing
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-
-        // Example: draw a moving square
-        let x = 50;
-        let y = 50;
-        let dx = 2;
-        let dy = 2;
-        const size = 30;
-
-        function update() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#66ccff';
-            ctx.fillRect(x, y, size, size);
-
-            x += dx;
-            y += dy;
-
-            if (x + size > canvas.width || x < 0) dx = -dx;
-            if (y + size > canvas.height || y < 0) dy = -dy;
-
-            requestAnimationFrame(update);
-        }
-
-        update();
-    </script>
+    
+    <script src="script.js"></script>
+    <!-- 新增 3D 動畫腳本 -->
+    <script src="3d_background.js"></script> 
 </body>
 </html>
+
