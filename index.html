@@ -1,106 +1,149 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[你的ID] - 像素實驗室 | Pixel Lab</title>
+    <title>3D 動畫風格網站</title>
+
+    <!-- Google 字體 -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
     <style>
-        /* 為了演示，將 CSS 寫在這裡。實際開發請移至 style.css */
-        body {
-            background-color: #2c3e50; /* 深藍色/暗色背景，像舊電腦螢幕 */
-            color: #ecf0f1; /* 螢光白/淺灰文字 */
-            font-family: monospace; /* 或自訂像素字體 */
-            padding: 20px;
+        body, html {
             margin: 0;
-            image-rendering: pixelated; /* 關鍵！讓圖片和縮放看起來有像素感 */
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            color: #fff;
         }
 
-        .pixel-border {
-            border: 4px solid #f39c12; /* 鮮豔的邊框 */
-            box-shadow: 6px 6px 0 0 #d35400; /* 模擬立體感的陰影 */
-            padding: 15px;
-            margin-bottom: 30px;
-            background-color: #34495e; /* 內部介面顏色 */
+        /* 導覽列 */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 40px;
+            background: rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(10px);
+            z-index: 10;
         }
 
-        /* 更多 CSS 樣式請參考後面的建議 */
+        nav .logo {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        nav ul li {
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        nav ul li:hover {
+            color: #00ffe7;
+        }
+
+        /* 文字內容 */
+        .hero {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            animation: fadeIn 2s ease forwards;
+        }
+
+        .hero h1 {
+            font-size: 64px;
+            margin: 0;
+        }
+
+        .hero p {
+            margin-top: 15px;
+            font-size: 20px;
+            opacity: 0.8;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, -45%); }
+            to   { opacity: 1; transform: translate(-50%, -50%); }
+        }
+
+        /* Canvas 全背景 */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
     </style>
 </head>
+
 <body>
-
-    </body>
-</html>
-HTML
-
-    <header id="system-boot" class="pixel-border">
-        <h1>>>> [你的ID] 系統初始化 v1.0.1 <<<</h1>
-        <nav id="main-menu">
-            <a href="#about">[ 關於我 ]</a>
-            <a href="#skills">[ 技能樹 ]</a>
-            <a href="#projects">[ 任務日誌 ]</a>
-            <a href="#contact">[ 通訊埠 ]</a>
-            <a href="#secrets" id="secret-link">[ ? ]</a>
-        </nav>
-    </header>
-
-    <section id="about" class="pixel-border">
-        <h2>:: 角色資料檔 (Player Profile)</h2>
-        <div id="avatar-container" style="float: right; margin-left: 20px;">
-            <img src="placeholder_avatar.png" alt="像素風格頭像" style="width: 100px; height: 100px; image-rendering: pixelated;">
-            <p style="text-align: center;">等級: 99 (Expert)</p>
-        </div>
-        <p><strong>代號 (Alias):</strong> [你的暱稱/ID]</p>
-        <p><strong>職業 (Class):</strong> [前端工程師 / 藝術家 / 學生]</p>
-        <p><strong>所在地 (Spawn Point):</strong> [你的城市]</p>
-        <p><strong>狀態 (Status):</strong> 💻 Coding... | 💡 Exploring... | ☕ Resting...</p>
-        <p>我是一個熱衷於創造和探索數位世界的玩家。這裡展示了我的技能、成就和正在進行的任務。準備好進入我的像素實驗室了嗎？</p>
-    </section>
-
-    <section id="skills" class="pixel-border">
-        <h2>:: 技能樹 (Skill Tree)</h2>
-        <h3>🔥 主要技能 (Primary Abilities)</h3>
+    <nav>
+        <div class="logo">My3D Site</div>
         <ul>
-            <li>HTML5/CSS3 <span class="xp-bar">[███████---] Lvl 80</span></li>
-            <li>JavaScript (Vanilla/React) <span class="xp-bar">[██████----] Lvl 70</span></li>
-            <li>[你的專業技能] <span class="xp-bar">[█████-----] Lvl 60</span></li>
+            <li>首頁</li>
+            <li>作品</li>
+            <li>聯絡</li>
         </ul>
-        <h3>🛠️ 工具箱 (Inventory)</h3>
-        <p>Git, VS Code, Figma, [其他工具]</p>
-    </section>
+    </nav>
 
-    <section id="projects" class="pixel-border">
-        <h2>:: 任務日誌 (Quest Log)</h2>
-        <div class="project-item">
-            <h3>[任務名稱 01]: 像素網站重製</h3>
-            <p><strong>類型:</strong> Web | <strong>狀態:</strong> 達成 (Completed) ✅</p>
-            <p><strong>描述:</strong> 嘗試用純 HTML/CSS 模擬復古遊戲介面。</p>
-            <a href="[連結到專案]" class="btn-link">[ 檢視紀錄檔 (View Log) ]</a>
-        </div>
-        <div class="project-item">
-            <h3>[任務名稱 02]: [你的其他專案]</h3>
-            <p><strong>類型:</strong> [類型] | <strong>狀態:</strong> 進行中 (In Progress) ⏳</p>
-            <p><strong>描述:</strong> [專案簡短描述]</p>
-        </div>
-    </section>
+    <div class="hero">
+        <h1>3D 動態網站</h1>
+        <p>這是一個具有 3D 背景動畫效果的網站範例</p>
+    </div>
 
-    <section id="contact" class="pixel-border">
-        <h2>:: 通訊埠 (Communication Port)</h2>
-        <p>想組隊合作或發送訊息？請使用以下傳輸協議：</p>
-        <div id="contact-links">
-            <a href="mailto:your_email@example.com">[ E-mail ]</a>
-            <a href="[你的LinkedIn]">[ LinkedIn ]</a>
-            <a href="[你的GitHub]">[ GitHub Repo ]</a>
-        </div>
-        </section>
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-    <footer id="system-info" class="pixel-border">
-        <p>&copy; 2024 [你的ID]. System running on Pixel OS. All rights reserved.</p>
-        <p>Memory Usage: 8-bit | CPU Load: Low</p>
-        <a href="#system-boot">[ ↑ 重啟 (Reboot) ]</a>
-    </footer>
+    <script>
+        // Three.js 基本設定
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
 
-    ```
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
 
----
-**建議：** 創建 `style.css` 和 `script.js` 文件，將 CSS 和 JS 邏輯分別放入，保持 HTML 文件的整潔。祝你設計愉快！
+        // 加入 3D 幾何物件
+        const geometry = new THREE.IcosahedronGeometry(2, 1);
+        const material = new THREE.MeshStandardMaterial({
+            color: 0x00ffe7,
+            wireframe: true
+        });
+        const mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+
+        // 燈光
+        const light = new THREE.PointLight(0xffffff, 1);
+        light.position.set(5, 5, 5);
+        scene.add(light);
+
+        camera.position.z = 5;
+
+        // 動畫
+        function animate() {
+            requestAnimationFrame(animate);
+            mesh.rotation.x += 0.005;
+            mesh.rotation.y += 0.008;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // 視窗縮放調整
+        window.addEventListener("resize", () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+
+</body>
+</html>
 
