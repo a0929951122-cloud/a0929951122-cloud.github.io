@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D 互動網站</title>
+    <title>Game Style 3D Site</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
@@ -12,63 +12,116 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
-            font-family: "Poppins", sans-serif;
             height: 100vh;
+            background: #050510;
+            font-family: 'Poppins', sans-serif;
             color: #fff;
         }
 
+        /* 遊戲 HUD 風格 Header */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
+            padding: 15px 40px;
             display: flex;
             justify-content: space-between;
-            padding: 20px 40px;
-            background: rgba(0, 0, 0, 0.35);
-            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 25, 0.4);
+            border-bottom: 2px solid #5737ff;
+            box-shadow: 0 0 20px #5737ff55;
+            backdrop-filter: blur(12px);
             z-index: 10;
         }
 
         nav .logo {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 700;
+            text-shadow: 0 0 12px #6c5eff;
         }
 
         nav ul {
-            display: flex;
             list-style: none;
+            display: flex;
             gap: 30px;
         }
 
-        nav ul li:hover {
-            color: #00ffe7;
+        nav ul li {
             cursor: pointer;
+            font-weight: 500;
+            transition: 0.2s;
         }
 
+        nav ul li:hover {
+            color: #00d0ff;
+            text-shadow: 0 0 12px #00d0ff;
+        }
+
+        /* 中央遊戲標題 */
         .hero {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             text-align: center;
-            animation: fadeIn 2s ease forwards;
-            z-index: 2;
+            z-index: 5;
         }
 
         .hero h1 {
-            font-size: 64px;
-            margin: 0;
+            font-size: 70px;
+            text-shadow: 0 0 20px #6c5eff, 0 0 40px #00d0ff;
         }
 
         .hero p {
-            margin-top: 15px;
-            font-size: 20px;
-            opacity: 0.8;
+            font-size: 22px;
+            opacity: 0.85;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translate(-50%, -45%); }
-            to   { opacity: 1; transform: translate(-50%, -50%); }
+        /* 遊戲 UI 血條 */
+        .hp-bar {
+            position: fixed;
+            bottom: 40px;
+            left: 40px;
+            width: 240px;
+            height: 25px;
+            background: #300;
+            border: 3px solid #ff4a4a;
+            box-shadow: 0 0 20px #ff4a4a99;
+        }
+
+        .hp-value {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #ff2a2a, #ff7a7a);
+            animation: hp-pulse 3s infinite alternate;
+        }
+
+        @keyframes hp-pulse {
+            from { opacity: 1; }
+            to { opacity: 0.6; }
+        }
+
+        /* 能量條 */
+        .mp-bar {
+            position: fixed;
+            bottom: 10px;
+            left: 40px;
+            width: 240px;
+            height: 20px;
+            background: #00203d;
+            border: 3px solid #00d0ff;
+            box-shadow: 0 0 20px #00d0ff99;
+        }
+
+        .mp-value {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #0088ff, #66ccff);
+            animation: mp-pulse 2.2s infinite alternate;
+        }
+
+        @keyframes mp-pulse {
+            from { opacity: 1; }
+            to { opacity: 0.5; }
         }
 
         canvas {
@@ -78,74 +131,102 @@
         }
     </style>
 </head>
-
 <body>
 
     <nav>
-        <div class="logo">My3D Site</div>
+        <div class="logo">DUNGEON X</div>
         <ul>
-            <li>首頁</li>
-            <li>作品</li>
-            <li>聯絡</li>
+            <li>開始</li>
+            <li>裝備</li>
+            <li>技能</li>
+            <li>設定</li>
         </ul>
     </nav>
 
     <div class="hero">
-        <h1>3D 互動網站</h1>
-        <p>滑鼠可以控制 3D 物件，點擊會產生粒子特效</p>
+        <h1>Dungeon X</h1>
+        <p>在黑暗中覺醒 · 選擇你的命運</p>
     </div>
 
-    <!-- Three.js CDN -->
+    <div class="hp-bar">
+        <div class="hp-value"></div>
+    </div>
+
+    <div class="mp-bar">
+        <div class="mp-value"></div>
+    </div>
+
+    <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <script>
-        // 基本設定
+        // ====== 基本 Three.js 設定 ======
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
-        // 主要 3D 物件
-        const geometry = new THREE.IcosahedronGeometry(2, 1);
-        const material = new THREE.MeshStandardMaterial({ color: 0x00ffe7, wireframe: true });
-        const mesh = new THREE.Mesh(geometry, material);
-        scene.add(mesh);
+        // ====== 遊戲風：3D 武器（由幾何體組成） ======
+        const sword = new THREE.Group();
+
+        // 刀身
+        const bladeGeo = new THREE.BoxGeometry(0.3, 4, 0.3);
+        const bladeMat = new THREE.MeshStandardMaterial({
+            color: 0x6c5eff,
+            emissive: 0x3222aa,
+            metalness: 0.8,
+            roughness: 0.2
+        });
+        const blade = new THREE.Mesh(bladeGeo, bladeMat);
+        blade.position.y = 1;
+        sword.add(blade);
+
+        // 握把
+        const gripGeo = new THREE.CylinderGeometry(0.25, 0.25, 1.1, 32);
+        const gripMat = new THREE.MeshStandardMaterial({
+            color: 0x111111,
+            metalness: 0.3
+        });
+        const grip = new THREE.Mesh(gripGeo, gripMat);
+        grip.position.y = -1.7;
+        sword.add(grip);
+
+        scene.add(sword);
 
         // 光源
-        const light = new THREE.PointLight(0xffffff, 1);
-        light.position.set(5, 5, 5);
+        const light = new THREE.PointLight(0xffffff, 1.2);
+        light.position.set(3, 5, 5);
         scene.add(light);
 
-        camera.position.z = 5;
+        camera.position.z = 6;
 
-        // ============
-        // 滑鼠互動
-        // ============
+        // ====== 滑鼠視角（遊戲感） ======
         let mouseX = 0, mouseY = 0;
 
         document.addEventListener("mousemove", (e) => {
-            mouseX = (e.clientX / window.innerWidth - 0.5) * 2; 
-            mouseY = (e.clientY / window.innerHeight - 0.5) * -2;
+            mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+            mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
         });
 
-        // ============
-        // 點擊粒子效果
-        // ============
+        // ====== 點擊產生能量粒子 ======
         const particles = [];
-        const particleGeometry = new THREE.SphereGeometry(0.05);
+        const pGeo = new THREE.SphereGeometry(0.08);
 
-        function createParticle(x, y) {
-            const particleMaterial = new THREE.MeshBasicMaterial({
-                color: 0x00ffe7
+        function spawnParticle() {
+            const material = new THREE.MeshBasicMaterial({ 
+                color: 0x00d0ff,
+                opacity: 1,
+                transparent: true
             });
 
-            const p = new THREE.Mesh(particleGeometry, particleMaterial);
+            const p = new THREE.Mesh(pGeo, material);
             p.position.set(0, 0, 0);
+
             p.velocity = new THREE.Vector3(
-                (Math.random() - 0.5) * 0.2,
-                (Math.random() - 0.5) * 0.2,
-                (Math.random() - 0.5) * 0.2
+                (Math.random()-0.5)*0.3,
+                (Math.random()-0.5)*0.3,
+                (Math.random()-0.5)*0.3
             );
 
             scene.add(p);
@@ -153,18 +234,15 @@
         }
 
         document.addEventListener("click", () => {
-            for (let i = 0; i < 50; i++) createParticle();
+            for (let i = 0; i < 40; i++) spawnParticle();
         });
 
         function updateParticles() {
             for (let i = particles.length - 1; i >= 0; i--) {
                 const p = particles[i];
                 p.position.add(p.velocity);
-                p.velocity.multiplyScalar(0.96);
-
-                // 粒子變淡並消失
-                p.material.opacity -= 0.01;
-                p.material.transparent = true;
+                p.velocity.multiplyScalar(0.95);
+                p.material.opacity -= 0.015;
 
                 if (p.material.opacity <= 0) {
                     scene.remove(p);
@@ -173,15 +251,17 @@
             }
         }
 
-        // ============
-        // 動畫 Loop
-        // ============
+        // ====== 動畫 Loop ======
         function animate() {
             requestAnimationFrame(animate);
 
-            // 滑鼠影響旋轉
-            mesh.rotation.x += (mouseY * 0.05 - mesh.rotation.x) * 0.05;
-            mesh.rotation.y += (mouseX * 0.05 - mesh.rotation.y) * 0.05;
+            // 遊戲視角：相機根據滑鼠微調
+            camera.position.x += (mouseX * 0.7 - camera.position.x) * 0.05;
+            camera.position.y += (-mouseY * 0.7 - camera.position.y) * 0.05;
+            camera.lookAt(scene.position);
+
+            // 武器旋轉
+            sword.rotation.y += 0.01;
 
             updateParticles();
             renderer.render(scene, camera);
@@ -189,7 +269,7 @@
 
         animate();
 
-        // 視窗縮放
+        // 視窗大小調整
         window.addEventListener("resize", () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
