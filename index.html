@@ -1,31 +1,44 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>像素風格 3D 網站</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- 引入 Three.js 函式庫 -->
-    <script type="importmap">
-        {
-            "imports": {
-                "three": "cdn.jsdelivr.net",
-                "three/addons/": "cdn.jsdelivr.net"
-            }
-        }
-    </script>
+    <title>Pixel World - [您的名字]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header class="pixel-font">
-        <h1>歡迎來到像素世界</h1>
-    </header>
-    <div id="world">
-        <!-- 3D 場景將在這裡渲染 -->
-    </div>
-    <div class="content pixel-font">
-        <p>這是一個結合了復古像素風格與現代 3D 動畫的網站。</p>
+
+    <div id="game-container">
+        <header class="status-bar">
+            <span id="player-hp">HP: 100/100</span>
+            <span id="player-level">LV: 1</span>
+        </header>
+
+        <main class="game-map">
+            <h1>:: Welcome to My Pixel Den ::</h1>
+            
+            <div id="player-character" class="pixel-art"></div>
+
+            <nav class="game-menu">
+                <button data-section="about">▶ 關於我</button>
+                <button data-section="portfolio">▶ 作品集</button>
+                <button data-section="contact">▶ 聯絡我</button>
+            </nav>
+
+            <section id="content-display" class="pixel-box">
+                <div id="about" class="content-section active">
+                    <h2>:: 角色數據 (關於我) ::</h2>
+                    <p>嗨！我是一位熱愛創造的 [您的職業]。這個網站是我的數位基地，在這裡你可以找到我的技能樹和個人專案。</p>
+                </div>
+                </section>
+        </main>
+
+        <footer class="console-footer">
+            © 2025 [您的名字] | Powered by Pixels
+        </footer>
     </div>
 
-    <script src="script.js" type="module"></script>
+    <script src="script.js"></script>
 </body>
 </html>
