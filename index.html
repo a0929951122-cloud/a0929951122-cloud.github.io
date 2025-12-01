@@ -3,60 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Style 3D Site</title>
+    <title>RPG 3D 魔法世界</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Marcellus&display=swap" rel="stylesheet">
 
     <style>
         body, html {
             margin: 0;
             padding: 0;
             overflow: hidden;
-            height: 100vh;
-            background: #050510;
-            font-family: 'Poppins', sans-serif;
+            background: #020209;
+            font-family: 'Marcellus', serif;
             color: #fff;
         }
 
-        /* 遊戲 HUD 風格 Header */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 15px 40px;
-            display: flex;
-            justify-content: space-between;
-            background: rgba(10, 10, 25, 0.4);
-            border-bottom: 2px solid #5737ff;
-            box-shadow: 0 0 20px #5737ff55;
-            backdrop-filter: blur(12px);
-            z-index: 10;
-        }
-
-        nav .logo {
-            font-size: 26px;
-            font-weight: 700;
-            text-shadow: 0 0 12px #6c5eff;
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 30px;
-        }
-
-        nav ul li {
-            cursor: pointer;
-            font-weight: 500;
-            transition: 0.2s;
-        }
-
-        nav ul li:hover {
-            color: #00d0ff;
-            text-shadow: 0 0 12px #00d0ff;
-        }
-
-        /* 中央遊戲標題 */
+        /* RPG 風標題 */
         .hero {
             position: absolute;
             top: 50%;
@@ -67,61 +28,52 @@
         }
 
         .hero h1 {
+            font-family: 'Cinzel', serif;
             font-size: 70px;
-            text-shadow: 0 0 20px #6c5eff, 0 0 40px #00d0ff;
+            letter-spacing: 4px;
+            text-shadow: 0 0 20px #8ecaff, 0 0 40px #3fb3ff;
         }
 
         .hero p {
             font-size: 22px;
+            margin-top: 10px;
             opacity: 0.85;
         }
 
-        /* 遊戲 UI 血條 */
-        .hp-bar {
+        /* RPG HUD */
+        .hud {
             position: fixed;
-            bottom: 40px;
-            left: 40px;
-            width: 240px;
-            height: 25px;
-            background: #300;
-            border: 3px solid #ff4a4a;
-            box-shadow: 0 0 20px #ff4a4a99;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            text-align: center;
+            z-index: 10;
         }
 
-        .hp-value {
+        .bar-container {
             width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, #ff2a2a, #ff7a7a);
-            animation: hp-pulse 3s infinite alternate;
-        }
-
-        @keyframes hp-pulse {
-            from { opacity: 1; }
-            to { opacity: 0.6; }
-        }
-
-        /* 能量條 */
-        .mp-bar {
-            position: fixed;
-            bottom: 10px;
-            left: 40px;
-            width: 240px;
             height: 20px;
-            background: #00203d;
-            border: 3px solid #00d0ff;
-            box-shadow: 0 0 20px #00d0ff99;
+            margin-top: 10px;
+            border: 2px solid #fff5;
+            border-radius: 5px;
+            overflow: hidden;
+            background: #111;
         }
 
-        .mp-value {
-            width: 100%;
+        .hp {
+            background: linear-gradient(90deg, #ff3d3d, #ff8b8b);
             height: 100%;
-            background: linear-gradient(90deg, #0088ff, #66ccff);
-            animation: mp-pulse 2.2s infinite alternate;
         }
 
-        @keyframes mp-pulse {
-            from { opacity: 1; }
-            to { opacity: 0.5; }
+        .mp {
+            background: linear-gradient(90deg, #3dacff, #8cd2ff);
+            height: 100%;
+        }
+
+        .exp {
+            background: linear-gradient(90deg, #ffc63d, #ffe58b);
+            height: 100%;
         }
 
         canvas {
@@ -133,75 +85,63 @@
 </head>
 <body>
 
-    <nav>
-        <div class="logo">DUNGEON X</div>
-        <ul>
-            <li>開始</li>
-            <li>裝備</li>
-            <li>技能</li>
-            <li>設定</li>
-        </ul>
-    </nav>
-
+    <!-- RPG 主標題 -->
     <div class="hero">
-        <h1>Dungeon X</h1>
-        <p>在黑暗中覺醒 · 選擇你的命運</p>
+        <h1>ARCANE REALM</h1>
+        <p>喚醒沉睡的魔力 · 點擊施放魔法</p>
     </div>
 
-    <div class="hp-bar">
-        <div class="hp-value"></div>
-    </div>
-
-    <div class="mp-bar">
-        <div class="mp-value"></div>
+    <!-- RPG HUD -->
+    <div class="hud">
+        <div class="bar-container"><div class="hp" style="width: 85%;"></div></div>
+        <div class="bar-container"><div class="mp" style="width: 60%;"></div></div>
+        <div class="bar-container"><div class="exp" style="width: 40%;"></div></div>
     </div>
 
     <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <script>
-        // ====== 基本 Three.js 設定 ======
+        // ====== 基本設定 ======
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
-        // ====== 遊戲風：3D 武器（由幾何體組成） ======
-        const sword = new THREE.Group();
-
-        // 刀身
-        const bladeGeo = new THREE.BoxGeometry(0.3, 4, 0.3);
-        const bladeMat = new THREE.MeshStandardMaterial({
-            color: 0x6c5eff,
-            emissive: 0x3222aa,
-            metalness: 0.8,
-            roughness: 0.2
+        // ====== 魔法陣（圓形 Wireframe） ======
+        const circleGeo = new THREE.RingGeometry(2.5, 3, 60);
+        const circleMat = new THREE.MeshBasicMaterial({
+            color: 0x3db2ff,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.6
         });
-        const blade = new THREE.Mesh(bladeGeo, bladeMat);
-        blade.position.y = 1;
-        sword.add(blade);
+        const magicCircle = new THREE.Mesh(circleGeo, circleMat);
+        magicCircle.rotation.x = -Math.PI / 2;
+        scene.add(magicCircle);
 
-        // 握把
-        const gripGeo = new THREE.CylinderGeometry(0.25, 0.25, 1.1, 32);
-        const gripMat = new THREE.MeshStandardMaterial({
-            color: 0x111111,
-            metalness: 0.3
+        // ====== 浮動寶珠 ======
+        const orbGeo = new THREE.SphereGeometry(0.7, 32, 32);
+        const orbMat = new THREE.MeshStandardMaterial({
+            color: 0x8cc8ff,
+            emissive: 0x2a74ff,
+            emissiveIntensity: 0.7,
+            transparent: true,
+            opacity: 0.95
         });
-        const grip = new THREE.Mesh(gripGeo, gripMat);
-        grip.position.y = -1.7;
-        sword.add(grip);
+        const orb = new THREE.Mesh(orbGeo, orbMat);
+        orb.position.y = 1.3;
+        scene.add(orb);
 
-        scene.add(sword);
-
-        // 光源
-        const light = new THREE.PointLight(0xffffff, 1.2);
-        light.position.set(3, 5, 5);
+        // ====== 光源 ======
+        const light = new THREE.PointLight(0x88ccff, 2, 20);
+        light.position.set(0, 3, 3);
         scene.add(light);
 
         camera.position.z = 6;
 
-        // ====== 滑鼠視角（遊戲感） ======
+        // ====== 滑鼠控制相機 ======
         let mouseX = 0, mouseY = 0;
 
         document.addEventListener("mousemove", (e) => {
@@ -209,24 +149,22 @@
             mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
         });
 
-        // ====== 點擊產生能量粒子 ======
+        // ====== 魔法粒子（施法特效） ======
         const particles = [];
-        const pGeo = new THREE.SphereGeometry(0.08);
+        const pGeo = new THREE.SphereGeometry(0.1);
 
-        function spawnParticle() {
-            const material = new THREE.MeshBasicMaterial({ 
-                color: 0x00d0ff,
-                opacity: 1,
-                transparent: true
-            });
+        function castMagic() {
+            const p = new THREE.Mesh(pGeo, new THREE.MeshBasicMaterial({
+                color: 0x7fc1ff,
+                transparent: true,
+                opacity: 1
+            }));
 
-            const p = new THREE.Mesh(pGeo, material);
-            p.position.set(0, 0, 0);
-
+            p.position.set(0, 1.3, 0);
             p.velocity = new THREE.Vector3(
-                (Math.random()-0.5)*0.3,
-                (Math.random()-0.5)*0.3,
-                (Math.random()-0.5)*0.3
+                (Math.random() - 0.5) * 0.25,
+                (Math.random() - 0.3) * 0.6,
+                (Math.random() - 0.5) * 0.25
             );
 
             scene.add(p);
@@ -234,14 +172,14 @@
         }
 
         document.addEventListener("click", () => {
-            for (let i = 0; i < 40; i++) spawnParticle();
+            for (let i = 0; i < 30; i++) castMagic();
         });
 
         function updateParticles() {
             for (let i = particles.length - 1; i >= 0; i--) {
                 const p = particles[i];
                 p.position.add(p.velocity);
-                p.velocity.multiplyScalar(0.95);
+                p.velocity.y += 0.005;
                 p.material.opacity -= 0.015;
 
                 if (p.material.opacity <= 0) {
@@ -251,31 +189,37 @@
             }
         }
 
-        // ====== 動畫 Loop ======
+        // ====== 動畫 ======
+        let t = 0;
+
         function animate() {
             requestAnimationFrame(animate);
 
-            // 遊戲視角：相機根據滑鼠微調
-            camera.position.x += (mouseX * 0.7 - camera.position.x) * 0.05;
-            camera.position.y += (-mouseY * 0.7 - camera.position.y) * 0.05;
+            // 魔法陣旋轉
+            magicCircle.rotation.z += 0.002;
+
+            // 漂浮寶珠上下跳動
+            orb.position.y = 1.3 + Math.sin(t * 2) * 0.2;
+            t += 0.01;
+
+            // RPG 視角：相機微漂移
+            camera.position.x += (mouseX * 0.8 - camera.position.x) * 0.03;
+            camera.position.y += (-mouseY * 0.6 - camera.position.y) * 0.03;
             camera.lookAt(scene.position);
 
-            // 武器旋轉
-            sword.rotation.y += 0.01;
-
             updateParticles();
+
             renderer.render(scene, camera);
         }
 
         animate();
 
-        // 視窗大小調整
+        // 視窗大小重設
         window.addEventListener("resize", () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
     </script>
-
 </body>
 </html>
