@@ -1,190 +1,122 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pixel World - [您的名字]</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <title>[你的ID] - 像素實驗室 | Pixel Lab</title>
+    <style>
+        /* 為了演示，將 CSS 寫在這裡。實際開發請移至 style.css */
+        body {
+            background-color: #2c3e50; /* 深藍色/暗色背景，像舊電腦螢幕 */
+            color: #ecf0f1; /* 螢光白/淺灰文字 */
+            font-family: monospace; /* 或自訂像素字體 */
+            padding: 20px;
+            margin: 0;
+            image-rendering: pixelated; /* 關鍵！讓圖片和縮放看起來有像素感 */
+        }
+
+        .pixel-border {
+            border: 4px solid #f39c12; /* 鮮豔的邊框 */
+            box-shadow: 6px 6px 0 0 #d35400; /* 模擬立體感的陰影 */
+            padding: 15px;
+            margin-bottom: 30px;
+            background-color: #34495e; /* 內部介面顏色 */
+        }
+
+        /* 更多 CSS 樣式請參考後面的建議 */
+    </style>
 </head>
 <body>
 
-    <div id="game-container">
-        <header class="status-bar">
-            <span id="player-hp">HP: 100/100</span>
-            <span id="player-level">LV: 1</span>
-        </header>
-
-        <main class="game-map">
-            <h1>:: Welcome to My Pixel Den ::</h1>
-            
-            <div id="player-character" class="pixel-art"></div>
-
-            <nav class="game-menu">
-                <button data-section="about">▶ 關於我</button>
-                <button data-section="portfolio">▶ 作品集</button>
-                <button data-section="contact">▶ 聯絡我</button>
-            </nav>
-
-            <section id="content-display" class="pixel-box">
-                <div id="about" class="content-section active">
-                    <h2>:: 角色數據 (關於我) ::</h2>
-                    <p>嗨！我是一位熱愛創造的 [您的職業]。這個網站是我的數位基地，在這裡你可以找到我的技能樹和個人專案。</p>
-                </div>
-                </section>
-        </main>
-
-        <footer class="console-footer">
-            © 2025 [您的名字] | Powered by Pixels
-        </footer>
-    </div>
-
-    <script src="script.js"></script>
-</body>
+    </body>
 </html>
-body {
-    background-color: #3d3d3d; /* 黑暗的背景 */
-    color: #f0f0f0;
-    font-family: 'Press Start 2P', monospace; /* 像素字體 */
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
-    font-size: 14px; /* 基礎文字大小 */
-}
+<header id="system-boot" class="pixel-border">
+        <h1>>>> [你的ID] 系統初始化 v1.0.1 <<<</h1>
+        <nav id="main-menu">
+            <a href="#about">[ 關於我 ]</a>
+            <a href="#skills">[ 技能樹 ]</a>
+            <a href="#projects">[ 任務日誌 ]</a>
+            <a href="#contact">[ 通訊埠 ]</a>
+            <a href="#secrets" id="secret-link">[ ? ]</a>
+        </nav>
+    </header>
 
-/* 核心容器 - 模擬遊戲螢幕 */
-#game-container {
-    width: 90%;
-    max-width: 800px;
-    border: 8px solid #000;
-    box-shadow: 0 0 0 4px #c2c2c2, 0 0 0 8px #5c5c5c; /* 經典雙層邊框 */
-    background-color: #5c5c5c;
-    padding: 20px;
-    border-radius: 4px;
-}
+    <section id="about" class="pixel-border">
+        <h2>:: 角色資料檔 (Player Profile)</h2>
+        <div id="avatar-container" style="float: right; margin-left: 20px;">
+            <img src="placeholder_avatar.png" alt="像素風格頭像" style="width: 100px; height: 100px; image-rendering: pixelated;">
+            <p style="text-align: center;">等級: 99 (Expert)</p>
+        </div>
+        <p><strong>代號 (Alias):</strong> [你的暱稱/ID]</p>
+        <p><strong>職業 (Class):</strong> [前端工程師 / 藝術家 / 學生]</p>
+        <p><strong>所在地 (Spawn Point):</strong> [你的城市]</p>
+        <p><strong>狀態 (Status):</strong> 💻 Coding... | 💡 Exploring... | ☕ Resting...</p>
+        <p>我是一個熱衷於創造和探索數位世界的玩家。這裡展示了我的技能、成就和正在進行的任務。準備好進入我的像素實驗室了嗎？</p>
+    </section>
 
-/* 確保所有圖片/元素在縮放時保持像素邊緣清晰 */
-.pixel-art {
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
-}
+    <section id="skills" class="pixel-border">
+        <h2>:: 技能樹 (Skill Tree)</h2>
+        <h3>🔥 主要技能 (Primary Abilities)</h3>
+        <ul>
+            <li>HTML5/CSS3 <span class="xp-bar">[███████---] Lvl 80</span></li>
+            <li>JavaScript (Vanilla/React) <span class="xp-bar">[██████----] Lvl 70</span></li>
+            <li>[你的專業技能] <span class="xp-bar">[█████-----] Lvl 60</span></li>
+        </ul>
+        <h3>🛠️ 工具箱 (Inventory)</h3>
+        <p>Git, VS Code, Figma, [其他工具]</p>
+    </section>
 
-h1, h2 {
-    color: #4df07a; /* 綠色高亮 */
-    text-shadow: 2px 2px #000;
-    margin-top: 0;
-    font-size: 1.2em;
-}
+    <section id="projects" class="pixel-border">
+        <h2>:: 任務日誌 (Quest Log)</h2>
+        <div class="project-item">
+            <h3>[任務名稱 01]: 像素網站重製</h3>
+            <p><strong>類型:</strong> Web | <strong>狀態:</strong> 達成 (Completed) ✅</p>
+            <p><strong>描述:</strong> 嘗試用純 HTML/CSS 模擬復古遊戲介面。</p>
+            <a href="[連結到專案]" class="btn-link">[ 檢視紀錄檔 (View Log) ]</a>
+        </div>
+        <div class="project-item">
+            <h3>[任務名稱 02]: [你的其他專案]</h3>
+            <p><strong>類型:</strong> [類型] | <strong>狀態:</strong> 進行中 (In Progress) ⏳</p>
+            <p><strong>描述:</strong> [專案簡短描述]</p>
+        </div>
+    </section>
 
-/* ---------------------------------- */
-/* UI 元素樣式 */
-/* ---------------------------------- */
-.status-bar {
-    background-color: #000;
-    color: #fffb00; /* 黃色文字 */
-    padding: 8px 15px;
-    border-bottom: 4px solid #4df07a;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
+    <section id="contact" class="pixel-border">
+        <h2>:: 通訊埠 (Communication Port)</h2>
+        <p>想組隊合作或發送訊息？請使用以下傳輸協議：</p>
+        <div id="contact-links">
+            <a href="mailto:your_email@example.com">[ E-mail ]</a>
+            <a href="[你的LinkedIn]">[ LinkedIn ]</a>
+            <a href="[你的GitHub]">[ GitHub Repo ]</a>
+        </div>
+        </section>
 
-.game-map {
-    text-align: center;
-}
+    <footer id="system-info" class="pixel-border">
+        <p>&copy; 2024 [你的ID]. System running on Pixel OS. All rights reserved.</p>
+        <p>Memory Usage: 8-bit | CPU Load: Low</p>
+        <a href="#system-boot">[ ↑ 重啟 (Reboot) ]</a>
+    </footer>
 
-.game-menu {
-    margin: 20px 0;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-}
+    ```
 
-.game-menu button {
-    font-family: 'Press Start 2P', monospace;
-    padding: 8px 12px;
-    border: 4px solid #1f77d3; /* 藍色邊框 */
-    background-color: #45a4ff; /* 淺藍色背景 */
-    color: #000;
-    cursor: pointer;
-    text-shadow: 1px 1px #fff;
-    transition: background-color 0.1s, transform 0.1s;
-}
+---
 
-.game-menu button:hover {
-    background-color: #79c1ff;
-}
+## ✨ 讓它更豐富的點子 (CSS & JS)
 
-.game-menu button:active {
-    background-color: #1f77d3;
-    transform: translateY(2px); /* 模擬按鈕按下效果 */
-}
+### 1. 像素風格的視覺加強 (CSS)
 
-/* 內容顯示框 - 模擬電腦視窗 */
-.pixel-box {
-    background-color: #000;
-    border: 4px solid #4df07a;
-    padding: 15px;
-    text-align: left;
-    min-height: 150px;
-}
+* **字體:** 使用像 **`Press Start 2P`** 這樣的免費像素字體。
+* **按鈕 (Buttons):** 讓導航連結和按鈕看起來像遊戲介面中的可點擊按鈕，有明顯的邊框和懸停 (hover) 效果。
+    * 例如：`a:hover { background-color: #e74c3c; }`
+* **動畫 (Animation):** 使用 CSS 模擬舊 CRT 螢幕的掃描線 (scanline) 效果或微小的螢幕閃爍/毛刺 (glitch) 效果。
+* **顏色:** 使用高飽和度、對比強烈的顏色（藍、黃、紅）來模擬 8-bit/16-bit 遊戲的調色板。
+* **進度條 (XP Bar):** 使用 `<span>` 配合背景顏色和邊框來製作看起來像遊戲中經驗值的進度條。
 
-.content-section {
-    display: none;
-}
-.content-section.active {
-    display: block;
-}
+### 2. 互動式元素 (JavaScript)
 
-.console-footer {
-    text-align: center;
-    color: #999;
-    padding-top: 15px;
-    font-size: 0.8em;
-}
+* **打字機效果:** 讓標題區塊的文字（如 `>>> [你的ID] 系統初始化 <<<`）或特定段落的文字，以一個字一個字蹦出的方式顯示，模擬舊電腦的終端機輸出。
+* **彩蛋/密室:** 在 `<a href="#secrets" id="secret-link">[ ? ]</a>` 加上點擊事件，點擊後會用 JS 顯示一個隱藏的「秘密房間」區塊，裡面可以放一些有趣的個人資訊或小遊戲。
+* **音效:** 點擊連結時，播放短促的像素遊戲音效（例如，按鈕點擊聲）。
 
-/* ---------------------------------- */
-/* 2D 動畫實現 (CSS Sprite) */
-/* ---------------------------------- */
+**建議：** 創建 `style.css` 和 `script.js` 文件，將 CSS 和 JS 邏輯分別放入，保持 HTML 文件的整潔。祝你設計愉快！
 
-/* 注意：您需要替換以下 URL 為您自己的 Sprite Sheet 圖片。 */
-/* 這裡使用一個通用的佔位符，該圖片應包含多幀動畫。 */
-#player-character {
-    width: 64px;    /* 角色單幀寬度 */
-    height: 64px;   /* 角色單幀高度 */
-    margin: 20px auto;
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAAAgCAYAAACm+EylAAAEa0lEQVR42u2cMUpFYRjHvx8nCYE8AQ0dFm6nU4Sbsg0r7RBNg6fQi047aYqB0n0bF8Gz07t9G16n0Iq4uXdxuD8D+OAu7+Hh/Z6T45T3PM8Xg4cPHjweA5LNZlM0Gg1BfH19gR49fswmP12u10/37t2DFy9e/D2h4Xj69CnY3NwEX378uB8XFxfB7e0tvH/++j+mJ8LhcMD58+fh3Llzf4B1t7e3Yd++fX/MnQx/fHwEP//8s7H6f//9h6amJvj333/F7u7uvw2Ew+FwOByP/x5g3r59i/Ly8uD19RXs7+8P6fL6+gpHR0dhc3MTvH37tl/kS4bhcJg9+PjxI9jZ2QkOhwPY2NgIsrOzwVeuXPmQj96hLwHwzO/fv4M7d+78O2ZycjIYHBwMhoaGYH9/P5iZmQleunTpoyM/mS8B8Ozp06dgfn4e7O3twc3NTfD58+fho48+/hHwyTUMABcWFkJaWhqYmppCRUUFGB4eBnfv3u3Jv2rG/g1Awv39/eDs7AxeXl6gtbUVHB0dgevXr/8F/NnJ7h0A3NraipSUlGzM49zcXDBfX18Qy+XyQpTj6hWAeXh4gKurK3B3dxe8efPmhzx48OBvB7J9gFsA3N/fB4VCgaysLMjb2xuMjo7C/Pz8H+f//PMP3N/fB7PZbPDhwwcwPj4Og4OD8PXr12B/fx/8/fff/zgUCoVwOBx+ePXqFfh9fk+Aez128+YNOH36NGB2dhYHBwfg7+8vODk5AYfDAdjY2IBdu3ZhZ2cnKBaLwWq1gv39/SAYDPzEwcHB4Pnz5+D+/fvA6XQ6s7Nnz+D169fg8XjA6XQ6rNvtBq/X63C4XAwGg4HBYIChoaFALBbDnJycgNvtBkqlEtzf3wez2QyaTCZQrVZDo9EAn8/ncLiT9t3dXZiZmQlmZ2fB4XCAvLy8YLfbwWAwAIfDgVmZ/f39GBwchuXl5WDx4sUgGo2C2Wz2R3R2dhYMDAwEp9MJuH//PggGg8HhcnkC3N7ejp+Pj4+B0+m0w+8rKytBvV4n3Y+Pj4PRaPSr9N/fX/j4+AgHBwdgfn4+2NvbC+l2u724/jT/8/MTHB0dBPf394PValX2VqvBbrfDbrcDp9MJzM3NhZ2dnf8YDAaDweHw+fPnYHNzE+Tm5gIWi4WwXC6C1+v1/5iQz+cDzM/Ph8PhQHp6Ouzv7wcvX758s/L39zd49+4dGBwcBFqtFhwOBzAYDIBerwfx8fEgFouBr6+vYH9/Pzg8PIRnnwH44sWLMDg4CA4PD8Hs7CzodDo4Pz8PMjIyQiwWg1arBSMjI0G9Xoe9vb3w+fPnsHnzZnB0dBSEh4cBm80Gt9sNPB6PRnN6ejqYmZkB+vp6GB0dBbvdDkuWLIGrqyvw+PHHsHjxYhAIBIDT6QRtbW1gYmIi9Pf3g9vttmfgf5rP54NYLAZeX1+Dzc1NwGq1gkKhANXV1eDu7i5otVpQq9Xg7u4uOHz4MDh8+DDw+/2gWCwCg4ODwOVyAa/X67DdbkMgEIC1tbVgZWE78Hq9oLm5GUqlEvT29oJqtQoGBgaCVCqFmZkZcLlcGBwcDMLBgF8G4N+/f8Pk5CRwOBxwuVzB7t27g927d/+C1NTU+Pjx42B+fjaK/t8A/hPg5f+bAAAAAElFTkSuQmCC'); /* 替換為您的 Sprite 圖片路徑 */
-    background-repeat: no-repeat;
-    background-position: 0 0;
-    
-    /* 啟動動畫 */
-    animation: pixel-idle 1s steps(4) infinite; /* 1秒完成一次循環, 分為4步(幀) */
-}
-
-/* 角色待機動畫關鍵幀 */
-/* 假設您的 Sprite Sheet 是橫向排列，且有 4 幀，每幀寬 64px。 */
-@keyframes pixel-idle {
-    from {
-        background-position: 0 0;
-    }
-    to {
-        /* 4 幀 x 64px = 256px */
-        background-position: -256px 0;
-    }
-}
-
-/* 媒體查詢 - 針對小螢幕調整字體大小 */
-@media (max-width: 600px) {
-    body {
-        font-size: 10px;
-    }
-    h1 {
-        font-size: 1em;
-    }
-    #game-container {
-        padding: 10px;
-    }
-}
