@@ -1,225 +1,213 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RPG 3D 魔法世界</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Portfolio</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Marcellus&display=swap" rel="stylesheet">
+<style>
+    body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background: radial-gradient(circle at center, #090b13 0%, #000 100%);
+        overflow-x: hidden;
+        color: white;
+    }
 
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background: #020209;
-            font-family: 'Marcellus', serif;
-            color: #fff;
-        }
+    /* 流動光背景 */
+    .blob {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 600px;
+        height: 600px;
+        background: linear-gradient(135deg, #5ddcff, #3c67e3, #4e00c2);
+        filter: blur(130px);
+        animation: blobMove 12s infinite ease-in-out;
+        opacity: 0.5;
+        transform: translate(-50%, -50%);
+        z-index: -1;
+    }
+    @keyframes blobMove {
+        0% { transform: translate(-50%, -50%) scale(1); }
+        50% { transform: translate(-40%, -45%) scale(1.3); }
+        100% { transform: translate(-50%, -50%) scale(1); }
+    }
 
-        /* RPG 風標題 */
-        .hero {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            z-index: 5;
-        }
+    /* header 標題 */
+    header {
+        padding: 80px 0 30px;
+        text-align: center;
+    }
 
-        .hero h1 {
-            font-family: 'Cinzel', serif;
-            font-size: 70px;
-            letter-spacing: 4px;
-            text-shadow: 0 0 20px #8ecaff, 0 0 40px #3fb3ff;
-        }
+    header h1 {
+        font-size: 3rem;
+        letter-spacing: 3px;
+        text-shadow: 0 0 20px #4e00c2;
+    }
 
-        .hero p {
-            font-size: 22px;
-            margin-top: 10px;
-            opacity: 0.85;
-        }
+    /* 🚀 3D 旋轉 Logo */
+    .logo-box {
+        margin: 0 auto;
+        width: 160px;
+        height: 160px;
+        perspective: 800px;
+    }
+    .logo {
+        width: 160px;
+        height: 160px;
+        background: linear-gradient(45deg, #5ddcff, #3c67e3, #4e00c2);
+        border-radius: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+        font-weight: bold;
+        animation: spin 6s infinite linear;
+        color: white;
+        box-shadow: 0 0 30px rgba(80, 150, 255, 0.6);
+        transform-style: preserve-3d;
+    }
+    @keyframes spin {
+        0% { transform: rotateY(0deg) rotateX(0deg); }
+        100% { transform: rotateY(360deg) rotateX(360deg); }
+    }
 
-        /* RPG HUD */
-        .hud {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60%;
-            text-align: center;
-            z-index: 10;
-        }
+    /* 3D 卡片 */
+    .card {
+        width: 300px;
+        height: 400px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 20px;
+        backdrop-filter: blur(15px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        margin: 50px auto;
+        transition: transform 0.4s;
+        transform-style: preserve-3d;
+        padding: 20px;
+        text-align: center;
+    }
+    .card:hover {
+        transform: rotateY(15deg) rotateX(10deg) scale(1.05);
+    }
 
-        .bar-container {
-            width: 100%;
-            height: 20px;
-            margin-top: 10px;
-            border: 2px solid #fff5;
-            border-radius: 5px;
-            overflow: hidden;
-            background: #111;
-        }
+    /* ⭐ 可滑動作品集 */
+    .slider-container {
+        width: 90%;
+        max-width: 900px;
+        margin: 80px auto;
+        overflow: hidden;
+        position: relative;
+    }
 
-        .hp {
-            background: linear-gradient(90deg, #ff3d3d, #ff8b8b);
-            height: 100%;
-        }
+    .slider {
+        display: flex;
+        gap: 20px;
+        transition: transform 0.6s ease;
+    }
 
-        .mp {
-            background: linear-gradient(90deg, #3dacff, #8cd2ff);
-            height: 100%;
-        }
+    .slide {
+        min-width: 260px;
+        height: 180px;
+        background: rgba(255,255,255,0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.2rem;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
 
-        .exp {
-            background: linear-gradient(90deg, #ffc63d, #ffe58b);
-            height: 100%;
-        }
+    .arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 2rem;
+        cursor: pointer;
+        padding: 10px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+        user-select: none;
+        backdrop-filter: blur(10px);
+    }
 
-        canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-        }
-    </style>
+    .arrow:hover {
+        background: rgba(255,255,255,0.2);
+    }
+
+    .arrow.left { left: -10px; }
+    .arrow.right { right: -10px; }
+
+    section {
+        text-align: center;
+        margin: 50px auto;
+        max-width: 900px;
+        padding: 20px;
+    }
+</style>
 </head>
+
 <body>
 
-    <!-- RPG 主標題 -->
-    <div class="hero">
-        <h1>ARCANE REALM</h1>
-        <p>喚醒沉睡的魔力 · 點擊施放魔法</p>
+<div class="blob"></div>
+
+<header>
+    <div class="logo-box">
+        <div class="logo">LOGO</div>
     </div>
+    <h1>你的名字</h1>
+    <p>3D 動態 Portfolio · Developer / Designer</p>
+</header>
 
-    <!-- RPG HUD -->
-    <div class="hud">
-        <div class="bar-container"><div class="hp" style="width: 85%;"></div></div>
-        <div class="bar-container"><div class="mp" style="width: 60%;"></div></div>
-        <div class="bar-container"><div class="exp" style="width: 40%;"></div></div>
+<!-- About 卡片 -->
+<div class="card">
+    <h2>關於我</h2>
+    <p>
+        我是一位熱衷創意網站、動畫與程式的開發者。
+        喜歡打造未來感、3D、互動式體驗。
+    </p>
+</div>
+
+<!-- ⭐ 滑動式作品集 -->
+<section>
+    <h2>作品集</h2>
+    <p>滑動查看你的作品：</p>
+
+    <div class="slider-container">
+        <div class="arrow left" onclick="prevSlide()">❮</div>
+        <div class="arrow right" onclick="nextSlide()">❯</div>
+
+        <div class="slider" id="slider">
+            <div class="slide">作品 1</div>
+            <div class="slide">作品 2</div>
+            <div class="slide">作品 3</div>
+            <div class="slide">作品 4</div>
+            <div class="slide">作品 5</div>
+        </div>
     </div>
+</section>
 
-    <!-- Three.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<section>
+    <h2>聯絡我</h2>
+    <p>Email：yourmail@example.com</p>
+</section>
 
-    <script>
-        // ====== 基本設定 ======
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
+<script>
+    let index = 0;
+    function updateSlider() {
+        const slider = document.getElementById("slider");
+        slider.style.transform = `translateX(${-280 * index}px)`;
+    }
+    function nextSlide() {
+        index = Math.min(index + 1, 4); 
+        updateSlider();
+    }
+    function prevSlide() {
+        index = Math.max(index - 1, 0);
+        updateSlider();
+    }
+</script>
 
-        // ====== 魔法陣（圓形 Wireframe） ======
-        const circleGeo = new THREE.RingGeometry(2.5, 3, 60);
-        const circleMat = new THREE.MeshBasicMaterial({
-            color: 0x3db2ff,
-            wireframe: true,
-            transparent: true,
-            opacity: 0.6
-        });
-        const magicCircle = new THREE.Mesh(circleGeo, circleMat);
-        magicCircle.rotation.x = -Math.PI / 2;
-        scene.add(magicCircle);
-
-        // ====== 浮動寶珠 ======
-        const orbGeo = new THREE.SphereGeometry(0.7, 32, 32);
-        const orbMat = new THREE.MeshStandardMaterial({
-            color: 0x8cc8ff,
-            emissive: 0x2a74ff,
-            emissiveIntensity: 0.7,
-            transparent: true,
-            opacity: 0.95
-        });
-        const orb = new THREE.Mesh(orbGeo, orbMat);
-        orb.position.y = 1.3;
-        scene.add(orb);
-
-        // ====== 光源 ======
-        const light = new THREE.PointLight(0x88ccff, 2, 20);
-        light.position.set(0, 3, 3);
-        scene.add(light);
-
-        camera.position.z = 6;
-
-        // ====== 滑鼠控制相機 ======
-        let mouseX = 0, mouseY = 0;
-
-        document.addEventListener("mousemove", (e) => {
-            mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-            mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-        });
-
-        // ====== 魔法粒子（施法特效） ======
-        const particles = [];
-        const pGeo = new THREE.SphereGeometry(0.1);
-
-        function castMagic() {
-            const p = new THREE.Mesh(pGeo, new THREE.MeshBasicMaterial({
-                color: 0x7fc1ff,
-                transparent: true,
-                opacity: 1
-            }));
-
-            p.position.set(0, 1.3, 0);
-            p.velocity = new THREE.Vector3(
-                (Math.random() - 0.5) * 0.25,
-                (Math.random() - 0.3) * 0.6,
-                (Math.random() - 0.5) * 0.25
-            );
-
-            scene.add(p);
-            particles.push(p);
-        }
-
-        document.addEventListener("click", () => {
-            for (let i = 0; i < 30; i++) castMagic();
-        });
-
-        function updateParticles() {
-            for (let i = particles.length - 1; i >= 0; i--) {
-                const p = particles[i];
-                p.position.add(p.velocity);
-                p.velocity.y += 0.005;
-                p.material.opacity -= 0.015;
-
-                if (p.material.opacity <= 0) {
-                    scene.remove(p);
-                    particles.splice(i, 1);
-                }
-            }
-        }
-
-        // ====== 動畫 ======
-        let t = 0;
-
-        function animate() {
-            requestAnimationFrame(animate);
-
-            // 魔法陣旋轉
-            magicCircle.rotation.z += 0.002;
-
-            // 漂浮寶珠上下跳動
-            orb.position.y = 1.3 + Math.sin(t * 2) * 0.2;
-            t += 0.01;
-
-            // RPG 視角：相機微漂移
-            camera.position.x += (mouseX * 0.8 - camera.position.x) * 0.03;
-            camera.position.y += (-mouseY * 0.6 - camera.position.y) * 0.03;
-            camera.lookAt(scene.position);
-
-            updateParticles();
-
-            renderer.render(scene, camera);
-        }
-
-        animate();
-
-        // 視窗大小重設
-        window.addEventListener("resize", () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-    </script>
 </body>
 </html>
