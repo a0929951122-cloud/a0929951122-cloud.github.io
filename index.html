@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D 動畫風格網站</title>
+    <title>3D 互動網站</title>
 
-    <!-- Google 字體 -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
     <style>
@@ -13,12 +12,11 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
-            font-family: 'Poppins', sans-serif;
+            font-family: "Poppins", sans-serif;
             height: 100vh;
             color: #fff;
         }
 
-        /* 導覽列 */
         nav {
             position: fixed;
             top: 0;
@@ -41,15 +39,12 @@
             list-style: none;
             gap: 30px;
         }
-        nav ul li {
-            cursor: pointer;
-            transition: 0.3s;
-        }
+
         nav ul li:hover {
             color: #00ffe7;
+            cursor: pointer;
         }
 
-        /* 文字內容 */
         .hero {
             position: absolute;
             top: 50%;
@@ -57,6 +52,7 @@
             transform: translate(-50%, -50%);
             text-align: center;
             animation: fadeIn 2s ease forwards;
+            z-index: 2;
         }
 
         .hero h1 {
@@ -75,7 +71,6 @@
             to   { opacity: 1; transform: translate(-50%, -50%); }
         }
 
-        /* Canvas 全背景 */
         canvas {
             position: fixed;
             top: 0;
@@ -85,6 +80,7 @@
 </head>
 
 <body>
+
     <nav>
         <div class="logo">My3D Site</div>
         <ul>
@@ -95,48 +91,105 @@
     </nav>
 
     <div class="hero">
-        <h1>3D 動態網站</h1>
-        <p>這是一個具有 3D 背景動畫效果的網站範例</p>
+        <h1>3D 互動網站</h1>
+        <p>滑鼠可以控制 3D 物件，點擊會產生粒子特效</p>
     </div>
 
     <!-- Three.js CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <script>
-        // Three.js 基本設定
+        // 基本設定
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ antialias: true });
-
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
-        // 加入 3D 幾何物件
+        // 主要 3D 物件
         const geometry = new THREE.IcosahedronGeometry(2, 1);
-        const material = new THREE.MeshStandardMaterial({
-            color: 0x00ffe7,
-            wireframe: true
-        });
+        const material = new THREE.MeshStandardMaterial({ color: 0x00ffe7, wireframe: true });
         const mesh = new THREE.Mesh(geometry, material);
         scene.add(mesh);
 
-        // 燈光
+        // 光源
         const light = new THREE.PointLight(0xffffff, 1);
         light.position.set(5, 5, 5);
         scene.add(light);
 
         camera.position.z = 5;
 
-        // 動畫
+        // ============
+        // 滑鼠互動
+        // ============
+        let mouseX = 0, mouseY = 0;
+
+        document.addEventListener("mousemove", (e) => {
+            mouseX = (e.clientX / window.innerWidth - 0.5) * 2; 
+            mouseY = (e.clientY / window.innerHeight - 0.5) * -2;
+        });
+
+        // ============
+        // 點擊粒子效果
+        // ============
+        const particles = [];
+        const particleGeometry = new THREE.SphereGeometry(0.05);
+
+        function createParticle(x, y) {
+            const particleMaterial = new THREE.MeshBasicMaterial({
+                color: 0x00ffe7
+            });
+
+            const p = new THREE.Mesh(particleGeometry, particleMaterial);
+            p.position.set(0, 0, 0);
+            p.velocity = new THREE.Vector3(
+                (Math.random() - 0.5) * 0.2,
+                (Math.random() - 0.5) * 0.2,
+                (Math.random() - 0.5) * 0.2
+            );
+
+            scene.add(p);
+            particles.push(p);
+        }
+
+        document.addEventListener("click", () => {
+            for (let i = 0; i < 50; i++) createParticle();
+        });
+
+        function updateParticles() {
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.position.add(p.velocity);
+                p.velocity.multiplyScalar(0.96);
+
+                // 粒子變淡並消失
+                p.material.opacity -= 0.01;
+                p.material.transparent = true;
+
+                if (p.material.opacity <= 0) {
+                    scene.remove(p);
+                    particles.splice(i, 1);
+                }
+            }
+        }
+
+        // ============
+        // 動畫 Loop
+        // ============
         function animate() {
             requestAnimationFrame(animate);
-            mesh.rotation.x += 0.005;
-            mesh.rotation.y += 0.008;
+
+            // 滑鼠影響旋轉
+            mesh.rotation.x += (mouseY * 0.05 - mesh.rotation.x) * 0.05;
+            mesh.rotation.y += (mouseX * 0.05 - mesh.rotation.y) * 0.05;
+
+            updateParticles();
             renderer.render(scene, camera);
         }
+
         animate();
 
-        // 視窗縮放調整
+        // 視窗縮放
         window.addEventListener("resize", () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
@@ -146,4 +199,3 @@
 
 </body>
 </html>
-
